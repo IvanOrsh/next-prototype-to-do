@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@auth/core':
+    specifier: ^0.28.0
+    version: 0.28.0
   '@auth/drizzle-adapter':
     specifier: ^0.8.0
     version: 0.8.0
