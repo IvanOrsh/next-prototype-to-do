@@ -20,6 +20,17 @@ Table of contents:
   - [2.11 Drizzle Configuration For Drizzle Kit](#211-drizzle-configuration-for-drizzle-kit)
   - [2.12 Drizzle Push Command](#212-drizzle-push-command)
   - [2.13 Add `*.sqlite` to `.gitignore`](#213-add-sqlite-to-gitignore)
+- [3. Responsive App Shell](#3-responsive-app-shell)
+  - [3.0 Tips](#30-tips)
+  - [3.1 Create Page Stubs](#31-create-page-stubs)
+  - [3.2 Add Auth Check to Private Layout](#32-add-auth-check-to-private-layout)
+  - [3.3 Create App Shell Component](#33-create-app-shell-component)
+  - [2.4 CSS Grid Layout](#24-css-grid-layout)
+  - [2.5 Create Header Component](#25-create-header-component)
+  - [2.6 Avatar Dropdown Menu](#26-avatar-dropdown-menu)
+  - [2.7 Sign Out Button](#27-sign-out-button)
+  - [2.8 Sidebar And Animation](#28-sidebar-and-animation)
+  - [2.9 Add Accent Colors to Tailwind Theme](#29-add-accent-colors-to-tailwind-theme)
 
 ## 1. Initial Setup
 
@@ -335,7 +346,28 @@ export default defineConfig({
 
 ### 2.13 Add `*.sqlite` to `.gitignore`
 
+## 3. Responsive App Shell
 
+### 3.0 Tips
 
+1. Use grid for 2d layouts
+2. Use flex for 1d layouts
+3. Use CSS variables
 
+### 3.1 Create Page Stubs
 
+### 3.2 Add Auth Check to Private Layout
+
+### 3.3 Create App Shell Component
+
+### 2.4 CSS Grid Layout
+
+### 2.5 Create Header Component
+
+### 2.6 Avatar Dropdown Menu
+
+### 2.7 Sign Out Button
+
+### 2.8 Sidebar And Animation
+
+### 2.9 Add Accent Colors to Tailwind Theme
