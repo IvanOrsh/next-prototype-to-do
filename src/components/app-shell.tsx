@@ -1,4 +1,5 @@
 import Header from "./header";
+import Sidebar from "./sidebar";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
@@ -6,7 +7,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <div className="sm:col-span-12">
         <Header />
       </div>
-      <div className="sm:col-span-3">sidebar</div>
+      <div className="sm:col-span-3">
+        <Sidebar />
+      </div>
       <div className="sm:col-span-9">{children}</div>
     </div>
   );
