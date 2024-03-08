@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import { Checkbox } from "./ui/checkbox";
 import type { Task } from "@/types/task";
 import { Button } from "./ui/button";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
@@ -18,15 +17,23 @@ export default function TaskListCompleted({ tasks }: TaskListCompletedProps) {
   return (
     <div>
       {open ? (
-        <div>
-          <Button onClick={() => setOpen(!open)}>
-            <ChevronDownIcon /> Completed
-          </Button>
+        <div className="flex flex-col gap-5">
+          <div>
+            <Button
+              className="text-accent-blue-foreground bg-accent hover:bg-accent/50"
+              onClick={() => setOpen(!open)}
+            >
+              <ChevronDownIcon className="mr-2" /> Completed
+            </Button>
+          </div>
           <TaskList tasks={tasks} />
         </div>
       ) : (
-        <Button onClick={() => setOpen(!open)}>
-          <ChevronRightIcon /> Completed
+        <Button
+          className="text-accent-blue-foreground bg-accent hover:bg-accent/50"
+          onClick={() => setOpen(!open)}
+        >
+          <ChevronRightIcon className="mr-2" /> Completed
         </Button>
       )}
     </div>

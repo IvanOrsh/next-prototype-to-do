@@ -10,7 +10,7 @@ type TaskListProps = {
 
 export default function TaskList({ tasks }: TaskListProps) {
   async function checkTask(task: Task) {
-    await completeTask(task.id);
+    await completeTask(task.id, !task.isComplete);
   }
 
   return (

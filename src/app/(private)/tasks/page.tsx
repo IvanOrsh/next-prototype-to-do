@@ -18,7 +18,7 @@ export default async function TasksPage() {
   });
 
   return (
-    <div className="flex flex-col  text-accent-blue-foreground p-5">
+    <div className="flex flex-col  text-accent-blue-foreground p-5 gap-5">
       <h1 className="font-bold text-3xl">Tasks</h1>
       {/* All Tasks */}
       {res.length > 0 ? (
@@ -36,7 +36,7 @@ export default async function TasksPage() {
       ) : null}
 
       <div>
-        <AddTask />
+        <AddTask className="text-accent-blue-foreground bg-accent hover:bg-accent/50" />
       </div>
     </div>
   );
