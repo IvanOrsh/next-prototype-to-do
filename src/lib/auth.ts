@@ -85,6 +85,10 @@ export const {
 
   callbacks: {
     async session({ session, user, token }) {
+      if (token) {
+        session.user.id = token.sub!;
+      }
+
       return session;
     },
   },
