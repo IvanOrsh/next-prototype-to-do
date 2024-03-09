@@ -18,6 +18,7 @@ import {
 import { Textarea } from "./ui/textarea";
 import { updateTask } from "@/actions/update-task";
 import { debounce } from "@/lib/debounce";
+import { StarFilledIcon, StarIcon } from "@radix-ui/react-icons";
 
 type TaskListProps = {
   tasks: Task[];
@@ -31,6 +32,13 @@ export default function TaskList({ tasks }: TaskListProps) {
   async function updateTitle(task: Task, title: string) {
     const data = {
       title,
+    };
+    await updateTask(task.id, data);
+  }
+
+  async function toggleIsImportant(task: Task) {
+    const data = {
+      isImportant: !task.isImportant,
     };
     await updateTask(task.id, data);
   }
@@ -55,6 +63,8 @@ export default function TaskList({ tasks }: TaskListProps) {
               onClick={() => checkTask(task)}
             />
           </div>
+
+          {/* Update Task Drawer */}
           <div className="flex-auto">
             <Drawer>
               <DrawerTrigger className="w-full text-left p-3">
@@ -91,6 +101,15 @@ export default function TaskList({ tasks }: TaskListProps) {
               </DrawerContent>
             </Drawer>
           </div>
+
+          {/* isImportant */}
+          <Button variant="ghost" onClick={() => toggleIsImportant(task)}>
+            {task.isImportant ? (
+              <StarFilledIcon className="w-6 h-6" />
+            ) : (
+              <StarIcon className="w-6 h-6" />
+            )}
+          </Button>
         </div>
       ))}
     </div>
