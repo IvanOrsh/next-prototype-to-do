@@ -7,10 +7,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -69,15 +66,17 @@ export default function TaskList({ tasks, accentClassName }: TaskListProps) {
           {/* Update Task Drawer */}
           <div className="flex-auto">
             <Drawer>
-              <DrawerTrigger className="w-full text-left p-3">
+              <DrawerTrigger
+                className={cn(
+                  "w-full text-left p-3",
+                  task.isComplete && "line-through text-muted-foreground"
+                )}
+              >
                 {task.title}
               </DrawerTrigger>
               <DrawerContent>
                 <DrawerHeader>
-                  <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                  <DrawerDescription>
-                    This action cannot be undone.
-                  </DrawerDescription>
+                  <DrawerTitle>Edit Task</DrawerTitle>
                 </DrawerHeader>
                 <div className="p-5 flex flex-col gap-5">
                   <Input
