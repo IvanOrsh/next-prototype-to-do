@@ -1,5 +1,7 @@
 "use client";
 
+import { format } from "date-fns";
+
 import type { Task } from "@/types/task";
 import { Checkbox } from "./ui/checkbox";
 import completeTask from "@/actions/complete-tasks";
@@ -45,6 +47,20 @@ export default function TaskList({ tasks, accentClassName }: TaskListProps) {
   async function updateNote(task: Task, note: string) {
     const data = {
       note,
+    };
+    await updateTask(task.id, data);
+  }
+
+  async function handleRemoveFromMyDay(task: Task) {
+    const data = {
+      addToMyDayAt: null,
+    };
+    await updateTask(task.id, data);
+  }
+
+  async function handleAddToMyDay(task: Task) {
+    const data = {
+      addToMyDayAt: new Date().toISOString(),
     };
     await updateTask(task.id, data);
   }
@@ -98,6 +114,19 @@ export default function TaskList({ tasks, accentClassName }: TaskListProps) {
                       500
                     )}
                   />
+
+                  {/* Add / Remove to my day */}
+
+                  {task.addedToMyDayAt &&
+                  task.addedToMyDayAt > format(new Date(), "yyyy-MM-dd") ? (
+                    <Button onClick={() => handleRemoveFromMyDay(task)}>
+                      Remove from My Day
+                    </Button>
+                  ) : (
+                    <Button onClick={() => handleAddToMyDay(task)}>
+                      Add to My Day
+                    </Button>
+                  )}
                 </div>
               </DrawerContent>
             </Drawer>
