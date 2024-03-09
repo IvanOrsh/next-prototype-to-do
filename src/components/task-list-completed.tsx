@@ -9,9 +9,13 @@ import TaskList from "./task-list";
 
 type TaskListCompletedProps = {
   tasks: Task[];
+  accentClassName?: string;
 };
 
-export default function TaskListCompleted({ tasks }: TaskListCompletedProps) {
+export default function TaskListCompleted({
+  tasks,
+  accentClassName,
+}: TaskListCompletedProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -26,7 +30,7 @@ export default function TaskListCompleted({ tasks }: TaskListCompletedProps) {
               <ChevronDownIcon className="mr-2" /> Completed
             </Button>
           </div>
-          <TaskList tasks={tasks} />
+          <TaskList tasks={tasks} accentClassName={accentClassName} />
         </div>
       ) : (
         <Button

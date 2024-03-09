@@ -22,7 +22,7 @@ export default async function TasksPage() {
       <h1 className="font-bold text-3xl">Tasks</h1>
       {/* All Tasks */}
       {res.length > 0 ? (
-        <TaskList tasks={res} />
+        <TaskList tasks={res} accentClassName="text-accent-blue-foreground" />
       ) : (
         <div>
           Tasks show up here if they aren&apos;t part of any lists you&apos;ve
@@ -32,7 +32,10 @@ export default async function TasksPage() {
 
       {/* Completed Tasks */}
       {resCompleted.length > 0 ? (
-        <TaskListCompleted tasks={resCompleted} />
+        <TaskListCompleted
+          tasks={resCompleted}
+          accentClassName="text-accent-blue-foreground"
+        />
       ) : null}
 
       <div>
