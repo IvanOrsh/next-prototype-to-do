@@ -31,6 +31,16 @@ Table of contents:
   - [2.7 Sign Out Button](#27-sign-out-button)
   - [2.8 Sidebar And Animation](#28-sidebar-and-animation)
   - [2.9 Add Accent Colors to Tailwind Theme](#29-add-accent-colors-to-tailwind-theme)
+- [4. Tasks Page](#4-tasks-page)
+  - [4.0 Tips](#40-tips)
+  - [4.1 Add Tasks Schema](#41-add-tasks-schema)
+  - [4.2 Query For Tasks](#42-query-for-tasks)
+  - [4.3 Task List](#43-task-list)
+  - [4.4 Completed Task List](#44-completed-task-list)
+  - [4.5 "Add Task" Button and Input](#45-add-task-button-and-input)
+  - [4.6 Filter For Incomplete and Completed Tasks](#46-filter-for-incomplete-and-completed-tasks)
+  - [4.7 Drawer Component](#47-drawer-component)
+  - [4.8 Add and Remove from My Day Button](#48-add-and-remove-from-my-day-button)
 
 ## 1. Initial Setup
 
@@ -371,3 +381,151 @@ export default defineConfig({
 ### 2.8 Sidebar And Animation
 
 ### 2.9 Add Accent Colors to Tailwind Theme
+
+## 4. Tasks Page
+
+### 4.0 Tips
+
+1. Don't forget to add `"use server"` directive to server actions.
+2. Don't forget to add `"use client"` directive to client components.
+3. Don't forget to call `revalidatePath` to refresh any pages that need to be refreshed after a call to a server action.
+
+### 4.1 Add Tasks Schema
+
+Something like that:
+
+```tsx
+export const tasks = sqliteTable("tasks", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, {
+      onDelete: "cascade",
+    }),
+  title: text("title"),
+  note: text("note"),
+  isComplete: integer("is_complete", { mode: "boolean" }).default(false),
+  createdAt: text("created_at").default(sql`CURRENT_DATE`),
+  addedToMyDayAt: text("added_to_my_day_at"),
+  isImportant: integer("is_important", { mode: "boolean" }).default(false),
+});
+```
+
+### 4.2 Query For Tasks
+
+```tsx
+export default async function TasksPage() {
+  const res = await db.query.tasks.findMany();
+  
+  // rest
+}
+```
+
+### 4.3 Task List
+
+### 4.4 Completed Task List
+
+### 4.5 "Add Task" Button and Input
+
+src/actions/create-task.ts:
+
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+
+import { auth } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { tasks } from "@/lib/schema";
+
+export async function createTask(title: string) {
+  const session = await auth();
+
+  if (!session) {
+    return {
+      message: "unauthenticated",
+    };
+  }
+
+  await db.insert(tasks).values({
+    userId: session.user.id,
+    title,
+  });
+
+  // important!
+  revalidatePath("/tasks");
+}
+```
+
+src/actions/complete-tasks.ts:
+
+```ts
+
+import { auth } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { tasks } from "@/lib/schema";
+
+export default async function completeTask(id: number, isComplete: boolean) {
+  const session = await auth();
+
+  if (!session) {
+    return {
+      message: "unauthenticated",
+    };
+  }
+
+  await db
+    .update(tasks)
+    .set({
+      isComplete,
+    })
+    .where(and(eq(tasks.id, id), eq(tasks.userId, session.user.id)));
+
+  // don't forget!
+  revalidatePath("/tasks");
+}
+```
+
+src/actions/update-task.ts:
+
+```ts
+"use server";
+
+import { and, eq } from "drizzle-orm";
+
+import { auth } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { tasks } from "@/lib/schema";
+import { revalidatePath } from "next/cache";
+
+export async function updateTask(id: number, data: any) {
+  const session = await auth();
+
+  if (!session) {
+    return {
+      message: "unauthenticated",
+    };
+  }
+
+  const update = {
+    title: data.title,
+    note: data.note,
+    isImportant: data.isImportant,
+    addedToMyDayAt: data.addToMyDayAt,
+  };
+
+  await db
+    .update(tasks)
+    .set(update)
+    .where(and(eq(tasks.id, id), eq(tasks.userId, session.user.id)));
+
+  revalidatePath("/tasks");
+}
+
+```
+
+### 4.6 Filter For Incomplete and Completed Tasks
+
+### 4.7 Drawer Component
+
+### 4.8 Add and Remove from My Day Button
