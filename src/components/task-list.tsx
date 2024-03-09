@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/drawer";
 import { Textarea } from "./ui/textarea";
 import { updateTask } from "@/actions/update-task";
+import { debounce } from "@/lib/debounce";
 
 type TaskListProps = {
   tasks: Task[];
@@ -71,14 +72,20 @@ export default function TaskList({ tasks }: TaskListProps) {
                     type="text"
                     name="title"
                     defaultValue={task.title ?? ""}
-                    onChange={(e) => updateTitle(task, e.target.value)}
+                    onChange={debounce(
+                      (e) => updateTitle(task, e.target.value),
+                      500
+                    )}
                   />
 
                   <Textarea
                     placeholder="Add note"
                     name="note"
                     defaultValue={task.note ?? ""}
-                    onChange={(e) => updateNote(task, e.target.value)}
+                    onChange={debounce(
+                      (e) => updateNote(task, e.target.value),
+                      500
+                    )}
                   />
                 </div>
               </DrawerContent>
