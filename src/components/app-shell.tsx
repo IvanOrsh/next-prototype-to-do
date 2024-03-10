@@ -1,15 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
+import { cn } from "@/lib/utils";
 import Header from "./header";
 import Sidebar from "./sidebar";
 import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
+import type { TaskCounts } from "@/types/task-count";
 
-export default function AppShell({ children }: { children: React.ReactNode }) {
+type AppShellProps = {
+  taskCounts: TaskCounts,
+}
+
+export default function AppShell({ children, taskCounts }: PropsWithChildren<AppShellProps>) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -29,7 +34,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           open && "translate-x-0"
         )}
       >
-        <Sidebar onClick={() => setOpen(false)} />
+        <Sidebar taskCounts={taskCounts} onClick={() => setOpen(false)} />
       </div>
 
       <div className="sm:hidden mt-5">

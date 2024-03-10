@@ -28,7 +28,7 @@ export default function TaskListCompleted({
               className={cn("bg-accent hover:bg-accent/50 text-accent-foreground")}
               onClick={() => setOpen(!open)}
             >
-              <ChevronDownIcon className="mr-2" /> Completed
+              <ChevronDownIcon className="mr-2" /> Completed {tasks.length}
             </Button>
           </div>
           <TaskList tasks={tasks} accentClassName={accentClassName} />
@@ -38,7 +38,7 @@ export default function TaskListCompleted({
           className={cn("bg-accent hover:bg-accent/50 text-accent-foreground")}
           onClick={() => setOpen(!open)}
         >
-          <ChevronRightIcon className="mr-2" /> Completed
+          <ChevronRightIcon className="mr-2" /> Completed {tasks.length}
         </Button>
       )}
     </div>
