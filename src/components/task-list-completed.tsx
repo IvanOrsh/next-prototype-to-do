@@ -25,7 +25,7 @@ export default function TaskListCompleted({
         <div className="flex flex-col gap-5">
           <div>
             <Button
-              className={cn("bg-accent hover:bg-accent/50", accentClassName)}
+              className={cn("bg-accent hover:bg-accent/50 text-accent-foreground")}
               onClick={() => setOpen(!open)}
             >
               <ChevronDownIcon className="mr-2" /> Completed
@@ -35,7 +35,7 @@ export default function TaskListCompleted({
         </div>
       ) : (
         <Button
-          className={cn("bg-accent hover:bg-accent/50", accentClassName)}
+          className={cn("bg-accent hover:bg-accent/50 text-accent-foreground")}
           onClick={() => setOpen(!open)}
         >
           <ChevronRightIcon className="mr-2" /> Completed
