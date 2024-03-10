@@ -17,7 +17,7 @@ import {
 import { Textarea } from "./ui/textarea";
 import { updateTask } from "@/actions/update-task";
 import { debounce } from "@/lib/debounce";
-import { StarFilledIcon, StarIcon } from "@radix-ui/react-icons";
+import { StarFilledIcon, StarIcon, SunIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 
 type TaskListProps = {
@@ -119,11 +119,27 @@ export default function TaskList({ tasks, accentClassName }: TaskListProps) {
 
                   {task.addedToMyDayAt &&
                   task.addedToMyDayAt > format(new Date(), "yyyy-MM-dd") ? (
-                    <Button onClick={() => handleRemoveFromMyDay(task)}>
+                    <Button
+                      className={cn(
+                        "bg-accent",
+                        "hover:bg-accent/50",
+                        accentClassName
+                      )}
+                      onClick={() => handleRemoveFromMyDay(task)}
+                    >
+                      <SunIcon className="mr-2 w-6 h-6" />
                       Remove from My Day
                     </Button>
                   ) : (
-                    <Button onClick={() => handleAddToMyDay(task)}>
+                    <Button
+                      className={cn(
+                        "bg-accent",
+                        "hover:bg-accent/50",
+                        accentClassName
+                      )}
+                      onClick={() => handleAddToMyDay(task)}
+                    >
+                      <SunIcon className="mr-2 w-6 h-6" />
                       Add to My Day
                     </Button>
                   )}
