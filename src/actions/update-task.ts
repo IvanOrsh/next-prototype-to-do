@@ -7,7 +7,14 @@ import { db } from "@/lib/db";
 import { tasks } from "@/lib/schema";
 import { revalidatePath } from "next/cache";
 
-export async function updateTask(id: number, data: any) {
+export type UpdateTaskSchema = {
+  title: string;
+  note: string;
+  isImportant: boolean;
+  addedToMyDayAt: string | null;
+};
+
+export async function updateTask(id: number, data: Partial<UpdateTaskSchema>) {
   const session = await auth();
 
   if (!session) {
@@ -20,7 +27,7 @@ export async function updateTask(id: number, data: any) {
     title: data.title,
     note: data.note,
     isImportant: data.isImportant,
-    addedToMyDayAt: data.addToMyDayAt,
+    addedToMyDayAt: data.addedToMyDayAt,
   };
 
   await db
