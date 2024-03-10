@@ -6,7 +6,7 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { tasks } from "@/lib/schema";
 
-export async function createTask(title: string) {
+export async function createTask(data: any) {
   const session = await auth();
 
   if (!session) {
@@ -15,10 +15,13 @@ export async function createTask(title: string) {
     };
   }
 
-  await db.insert(tasks).values({
+  const dataToInsert = {
     userId: session.user.id,
-    title,
-  });
+    title: data.title,
+    isImportant: data.isImportant,
+  };
+
+  await db.insert(tasks).values(dataToInsert);
 
   // important!
   revalidatePath("/tasks");
