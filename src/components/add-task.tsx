@@ -10,15 +10,20 @@ import { cn } from "@/lib/utils";
 
 type AddTaskProps = {
   className?: string;
+  isImportant: boolean;
 };
 
-export default function AddTask({ className }: AddTaskProps) {
+export default function AddTask({ className, isImportant }: AddTaskProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [title, setTitle] = useState("");
 
   async function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === "Enter") {
-      await createTask(title);
+      const data = {
+        title,
+        isImportant
+      }
+      await createTask(data);
       setIsAdding(false);
       setTitle("");
     }
@@ -35,6 +40,7 @@ export default function AddTask({ className }: AddTaskProps) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           onBlur={() => setIsAdding(false)}
+          className="text-accent-foreground"
         />
       ) : (
         <Button className={cn(className)} onClick={() => setIsAdding(true)}>
