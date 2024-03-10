@@ -1,6 +1,6 @@
 "use client";
 
-import { format } from "date-fns";
+import { format, startOfDay } from "date-fns";
 
 import type { Task } from "@/types/task";
 import { Checkbox } from "./ui/checkbox";
@@ -53,14 +53,14 @@ export default function TaskList({ tasks, accentClassName }: TaskListProps) {
 
   async function handleRemoveFromMyDay(task: Task) {
     const data = {
-      addToMyDayAt: null,
+      addedToMyDayAt: null,
     };
     await updateTask(task.id, data);
   }
 
   async function handleAddToMyDay(task: Task) {
     const data = {
-      addToMyDayAt: new Date().toISOString(),
+      addedToMyDayAt: new Date().toISOString(),
     };
     await updateTask(task.id, data);
   }
@@ -118,7 +118,7 @@ export default function TaskList({ tasks, accentClassName }: TaskListProps) {
                   {/* Add / Remove to my day */}
 
                   {task.addedToMyDayAt &&
-                  task.addedToMyDayAt > format(new Date(), "yyyy-MM-dd") ? (
+                    task.addedToMyDayAt > startOfDay(new Date()).toISOString() ? (
                     <Button
                       className={cn(
                         "bg-accent",

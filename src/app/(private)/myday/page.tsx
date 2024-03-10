@@ -5,7 +5,7 @@ import { and, eq, gte } from "drizzle-orm";
 import { tasks } from "@/lib/schema";
 import { auth } from "@/lib/auth";
 import TaskListCompleted from "@/components/task-list-completed";
-import { format } from "date-fns";
+import { format, startOfDay } from "date-fns";
 
 export default async function MyDayPage() {
   const session = await auth();
@@ -14,15 +14,15 @@ export default async function MyDayPage() {
     where: and(
       eq(tasks.userId, session!.user.id),
       eq(tasks.isComplete, false),
-      gte(tasks.addedToMyDayAt, format(new Date(), "yyyy-MM-dd")
-      ),),
+      gte(tasks.addedToMyDayAt, startOfDay(new Date()).toISOString()),
+    )
   });
 
   const resCompleted = await db.query.tasks.findMany({
     where: and(
       eq(tasks.userId, session!.user.id),
       eq(tasks.isComplete, true),
-      gte(tasks.addedToMyDayAt, format(new Date(), "yyyy-MM-dd")),
+      gte(tasks.addedToMyDayAt, startOfDay(new Date()).toISOString()),
     ),
   });
 
@@ -33,7 +33,7 @@ export default async function MyDayPage() {
       {res.length > 0 ? (
         <TaskList tasks={res} accentClassName="text-accent-green-foreground" />
       ) : (
-        <div>Try starring some tasks to see them here...</div>
+        <div>Tasks for today</div>
       )}
 
       {/* Completed Tasks */}
